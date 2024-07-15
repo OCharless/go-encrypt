@@ -32,7 +32,7 @@ To install and run this application locally, ensure you have Go installed on you
 The main entry point of the application is in `main.go`. To run the application:
 
 ```sh
-go run main.go
+go run ./cmd/main.go
 ```
 
 ## Docker
