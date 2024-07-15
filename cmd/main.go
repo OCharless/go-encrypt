@@ -71,7 +71,7 @@ func main() {
 		}
 		fmt.Printf("Encrypted data to bytes: %v\n", encryptedText)
 		encoded := hex.EncodeToString(encryptedText)
-		fmt.Printf("Encoded data from bytes to hex: %s\n", encoded)
+		fmt.Printf("Encoded data from bytes to hex: \033[32m%s\033[0m\n", encoded)
 	default:
 		// Decryption path
 		hexDecoded, err := hex.DecodeString(data)
@@ -82,6 +82,6 @@ func main() {
 		if err != nil {
 			log.Fatalf("Error decrypting data: %v", err)
 		}
-		fmt.Printf("Decrypted data: %s\n", decryptedData)
+		fmt.Printf("Decrypted data: \033[32m%s\033[0m\n", decryptedData)
 	}
 }

@@ -8,5 +8,15 @@ RUN go mod download
 
 COPY . .
 
-RUN go build -o /app/cmd/main .
+RUN go build -o main /app/cmd
 
+# Second stage: create the final image
+FROM alpine:latest as go-encrypt
+
+WORKDIR /root/
+
+# Copy the executable from the first stage
+COPY --from=builder /app/main .
+
+# Command to run the executable
+CMD ["./main"]

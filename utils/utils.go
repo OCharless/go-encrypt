@@ -43,18 +43,21 @@ func DecryptString(ciphertext []byte, key []byte) (string, error) {
 }
 
 func GetArgs(reader *bufio.Reader, action string) (string, string, error) {
-	switch action {
-	case "Y":
-		fmt.Print("Enter text to encode: ")
-	default:
-		fmt.Print("Enter text to decode: ")
+	if action == "Y" {
+		action = "encode"
+	} else {
+		action = "decode"
 	}
+	fmt.Printf("Enter text to %s: ", action)
 
 	data, err := reader.ReadString('\n')
 	if err != nil {
 		return "", "", fmt.Errorf("error reading text input for data: %w", err)
 	}
 	data = strings.TrimSpace(data)
+	fmt.Printf("\033[1A\033[K")
+	fmt.Printf("Enter text to %s: ", action)
+	fmt.Printf("\033[36m%s\033[0m\n", data)
 
 	fmt.Print("Enter salt: ")
 	salt, err := reader.ReadString('\n')
@@ -62,6 +65,11 @@ func GetArgs(reader *bufio.Reader, action string) (string, string, error) {
 		return "", "", fmt.Errorf("error reading text input for salt: %w", err)
 	}
 	salt = strings.TrimSpace(salt)
+
+	fmt.Printf("\033[1A\033[K")
+	fmt.Print("Enter salt: ")
+	fmt.Printf("\033[36m%s\033[0m\n", strings.Repeat("*", len(salt)))
+
 	if len(salt) != 32 {
 		return "", "", errors.New("salt must be 32 characters long")
 	}
